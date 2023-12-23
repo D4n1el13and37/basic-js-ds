@@ -61,19 +61,73 @@ class BinarySearchTree {
     }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+  remove(data) {
+    this.data = removeItem(this.data, data);
+
+    function removeItem(node, value) {
+      if (!node) return null;
+      //if value === leaf remove it
+      if (!node.left && !node.right) {
+        return null;
+      }
+
+      if (value < node.data) {
+        node.left = removeItem(node.left, value);
+        return node;
+      } else if (value > node.data) {
+        node.right = removeItem(node.right, value);
+        return node;
+      } else {
+
+        if (!node.left) {
+          node = node.right;
+          return node;
+        }
+
+        if (!node.right) {
+          node = node.left;
+          return node;
+        }
+        
+        //переменная со значением минимального числа в правой части
+        let minInRightBranch = node.right; 
+        while (minInRightBranch.left) {
+          minInRightBranch = minInRightBranch.left;
+        }
+
+        node.data = minInRightBranch.data; //теперь мы удаляемой ноде присваиваем минимальное значение с правой ветки
+        //затем правой ветке присваиваем значение равное рекурсивной функции результатом которой будет удаление из правой ветки листа) 
+        node.right = removeItem(node.right, minInRightBranch.data); 
+
+        return node;
+      }
+    }
   }
 
   min() {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
-  }
+    if(!this.data) {
+      return;
+    }
+    let minimal = this.data;
+
+    while(minimal.left) {
+      minimal = minimal.left;
+    }
+
+    return minimal.data;
+  } 
 
   max() {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+    if(!this.data) {
+      return;
+    }
+    let maximal = this.data;
+
+    while(maximal.right) {
+      maximal = maximal.right;
+    }
+
+    return maximal.data;
   }
 }
 
