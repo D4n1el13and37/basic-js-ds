@@ -66,7 +66,6 @@ class BinarySearchTree {
 
     function removeItem(node, value) {
       if (!node) return null;
-      //if value === leaf remove it
       if (!node.left && !node.right) {
         return null;
       }
@@ -89,14 +88,12 @@ class BinarySearchTree {
           return node;
         }
         
-        //переменная со значением минимального числа в правой части
         let minInRightBranch = node.right; 
         while (minInRightBranch.left) {
           minInRightBranch = minInRightBranch.left;
         }
 
-        node.data = minInRightBranch.data; //теперь мы удаляемой ноде присваиваем минимальное значение с правой ветки
-        //затем правой ветке присваиваем значение равное рекурсивной функции результатом которой будет удаление из правой ветки листа) 
+        node.data = minInRightBranch.data;
         node.right = removeItem(node.right, minInRightBranch.data); 
 
         return node;
